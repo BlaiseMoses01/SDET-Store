@@ -1,0 +1,29 @@
+app = "sdet-store"
+primary_region = "iad"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  DATABASE_URL = "/data/sqlite.db"
+  APP_MODE = "healthy"
+  SEED_ON_START = "1"
+  # ADMIN_TOKEN — set via `fly secrets set ADMIN_TOKEN=your-token`
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ['app']
+
+[http_service.concurrency]
+  type = "requests"
+  soft_limit = 20
+  hard_limit = 50
+
+[[mounts]]
+  source = "sdet_store_data"
+  destination = "/data"
