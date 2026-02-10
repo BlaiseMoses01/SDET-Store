@@ -35,7 +35,7 @@ Feature: Cart API
     Then the response status should be 404
     And the error should be "product_not_found"
 
-  @user @error
+  @user @error @xfail-buggy-api-cart-1
   Scenario: Add item that is out of stock
     Given I am authenticated via the API
     And a product is out of stock
@@ -57,7 +57,7 @@ Feature: Cart API
     When I PATCH /api/cart/items/:id with quantity 0
     Then the response should indicate the item was removed
 
-  @user @edge
+  @user @edge @xfail-buggy-api-cart-1
   Scenario: Update quantity above stock is clamped
     Given I am authenticated via the API
     And I have a cart item

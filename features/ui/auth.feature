@@ -23,7 +23,7 @@ Feature: Authentication UI
       | no number in password      | Password must contain at least one number.      |
       | mismatched confirm password| Passwords do not match.                         |
 
-  @guest
+  @guest @xfail-buggy-auth-2
   Scenario: Sign up with an existing email shows an error
     Given I am on the sign up page
     When I submit the sign up form with an email that already exists
@@ -47,6 +47,12 @@ Feature: Authentication UI
     When I submit the login form with invalid credentials
     Then I should see the login error "Invalid email or password."
 
+  @guest @error @xfail-buggy-auth-1
+  Scenario: Login with wrong password for Alice is rejected
+    Given I am on the login page
+    When I submit the login form with email "alice@example.com" and a wrong password
+    Then I should see the login error "Invalid email or password."
+
   @user
   Scenario: Logout clears the session
     Given I am logged in
@@ -64,3 +70,9 @@ Feature: Authentication UI
     Given I am logged in
     When I visit the sign up page
     Then I should be redirected to the products page
+
+  @user @edge @xfail-buggy-auth-3
+  Scenario: Expired sessions are rejected
+    Given I have an expired session cookie
+    When I visit the products page
+    Then I should be redirected to the login page

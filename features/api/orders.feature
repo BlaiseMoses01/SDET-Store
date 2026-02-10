@@ -56,7 +56,7 @@ Feature: Orders API
     Then the response status should be 404
     And the error should be "order_not_found"
 
-  @user
+  @user @xfail-buggy-api-orders-1
   Scenario: Replaying the same idempotency key returns the same order
     Given I am authenticated via the API
     And I have already created an order with idempotency key "demo-123"

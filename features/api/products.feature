@@ -12,8 +12,7 @@ Feature: Products API
     When I GET /api/products with search "desk"
     Then the response should include only matching products
 
-  @guest
+  @guest @xfail-buggy-api-products-1
   Scenario: In-stock filter excludes out-of-stock products
     When I GET /api/products with in_stock "1"
     Then no product in the response should be out of stock
-

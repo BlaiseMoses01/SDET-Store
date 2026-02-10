@@ -301,7 +301,7 @@ When running in Docker, seeding is controlled by two environment variables:
 
 ## Gherkin Specs
 
-The `features/` directory contains Gherkin (`.feature`) files that document expected behavior. These are **documentation-only** — they are not wired to a test runner. Use them as a reference for what to test.
+The `features/` directory contains Gherkin (`.feature`) files that document expected behavior. These are **documentation-only** — they are not wired to a test runner. Use them as a reference for what to test. See `docs/bug-key.md` for the expected failure mapping when bug modes are enabled.
 
 ```
 features/

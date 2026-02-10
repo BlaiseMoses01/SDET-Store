@@ -13,6 +13,12 @@ Feature: Product listing and filters
     When I search for "desk"
     Then I should see only products matching the search
 
+  @guest @edge @xfail-buggy-products-1
+  Scenario: Search is case-insensitive
+    Given I am on the products page
+    When I search for "headphones"
+    Then I should see "Wireless Headphones"
+
   @guest @edge
   Scenario: Search with no matches shows the empty state
     Given I am on the products page
@@ -31,6 +37,12 @@ Feature: Product listing and filters
     When I enable the in stock only filter
     Then I should not see out of stock products
 
+  @guest @edge @xfail-buggy-products-3
+  Scenario: Price sort low to high orders ascending
+    Given I am on the products page
+    When I sort products by price low to high
+    Then products should be sorted by ascending price
+
   @guest @edge
   Scenario: Guest users see a login prompt instead of Add to Cart
     Given I am on the products page
@@ -48,7 +60,7 @@ Feature: Product listing and filters
     When I add a product to the cart
     Then the product stock count should decrease by 1
 
-  @user @error
+  @user @error @xfail-buggy-products-2
   Scenario: Adding an out of stock product shows an error
     Given I am logged in
     And a product is out of stock
@@ -68,6 +80,13 @@ Feature: Product listing and filters
     And I am on the products page
     When I remove the product from the cart
     Then the product stock count should increase by 1
+
+  @user @edge @xfail-buggy-cart-3
+  Scenario: Nav cart count reflects cart items
+    Given I am logged in
+    And I have items in my cart
+    When I visit the products page
+    Then the nav cart count should be greater than 0
 
   @user @error
   Scenario: Visiting a missing order shows an error

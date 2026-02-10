@@ -22,7 +22,7 @@ Feature: Authentication API
     Then the response status should be 401
     And the error should be "invalid_credentials"
 
-  @guest @error
+  @guest @error @xfail-buggy-api-auth-1
   Scenario: /api/me without a session is unauthorized
     Given I am not authenticated
     When I GET /api/me
@@ -41,3 +41,10 @@ Feature: Authentication API
     When I POST to /api/logout
     Then the response status should be 200
     And my session should be invalidated
+
+  @guest @error @xfail-buggy-api-auth-2
+  Scenario: Login with wrong password for existing user is rejected
+    Given I have credentials for "alice@example.com" with a wrong password
+    When I POST to /api/login
+    Then the response status should be 401
+    And the error should be "invalid_credentials"

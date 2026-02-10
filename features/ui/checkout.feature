@@ -20,7 +20,13 @@ Feature: Checkout UI
       | missing name      | Name is required.                     |
       | missing address   | Address is required.                  |
       | missing city      | City is required.                     |
-      | invalid zip code  | Valid 5-digit ZIP code is required.   |
+
+  @user @error @xfail-buggy-checkout-1
+  Scenario: Invalid ZIP shows an error
+    Given I am logged in
+    And I have items in my cart
+    When I submit the shipping form with an invalid ZIP
+    Then I should see the shipping error "Valid 5-digit ZIP code is required."
 
   @user
   Scenario: Payment step accepts card details
@@ -42,12 +48,12 @@ Feature: Checkout UI
       | invalid expiry    | Please enter a valid expiry date (MM/YY).   |
       | invalid cvc       | Please enter a valid CVC.                   |
 
-  @user
-  Scenario: Review step displays order totals
+  @user @xfail-buggy-checkout-2
+  Scenario: Review total equals the sum of price times quantity
     Given I am logged in
     And I have completed shipping and payment
     When I view the review step
-    Then I should see the item list and total
+    Then the total should equal the sum of item price times quantity
 
   @user
   Scenario: Placing an order creates an order confirmation
@@ -55,6 +61,13 @@ Feature: Checkout UI
     And I have completed shipping and payment
     When I place the order
     Then I should see the order confirmation
+
+  @user @xfail-buggy-checkout-3
+  Scenario: Order confirmation shows confirmed status
+    Given I am logged in
+    And I have completed shipping and payment
+    When I place the order
+    Then the order status should be "confirmed"
 
   @user @error
   Scenario: Missing checkout session shows an error

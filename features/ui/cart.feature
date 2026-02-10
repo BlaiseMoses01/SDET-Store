@@ -23,14 +23,14 @@ Feature: Cart UI
     When I update the quantity above available stock
     Then the item quantity should be capped at available stock
 
-  @user
+  @user @xfail-buggy-cart-2
   Scenario: Update quantity recalculates subtotal
     Given I am logged in
     And I have a product in my cart
     When I update the quantity
     Then the item subtotal should update
 
-  @user
+  @user @xfail-buggy-cart-1
   Scenario: Remove item clears it from cart
     Given I am logged in
     And I have a product in my cart
