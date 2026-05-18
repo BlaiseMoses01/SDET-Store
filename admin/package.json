@@ -1,0 +1,19 @@
+{
+  "name": "sdet-store-admin",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "tsc -p tsconfig.json",
+    "start": "node app/dist/src/server.js"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.9",
+    "hono": "^4.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.9",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}

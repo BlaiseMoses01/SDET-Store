@@ -95,6 +95,12 @@ export function layout(
   <main>
     ${body}
   </main>
+  <script>
+    try {
+      var es = new EventSource('/__admin/events');
+      es.onmessage = function () { location.reload(); };
+    } catch (_) {}
+  </script>
 </body>
 </html>`;
 }
